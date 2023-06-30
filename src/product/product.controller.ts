@@ -24,10 +24,14 @@ import { ProductEntity } from "./schemas/product.entity";
     }
   
     @Get()
-    async getItem(@Query() req: ProductEntity) {
+    async getItem(@Query() req: any) {
       console.log(req);
-      
-      return await this.productService.getItem(req);
+      if(req.id){
+        return await this.productService.getItemById(req);
+      }
+      else{
+        return await this.productService.getItem(req);
+      }    
     }
     @Post()
     async createItem(@Body() req: ProductEntity) {

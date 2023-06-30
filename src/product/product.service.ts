@@ -23,11 +23,30 @@ export class ProductService {
     })
   }
 
+  async getItemById(req:any) {
+    console.log(req);
+    try {
+      req.size && (req.size= JSON.parse(req.size))
+      
+        let items = await this.productModel
+          .findById(req.id)
+        console.log("here", items);
+      
+      if (items) { return ({ data: items }) }
+      else return ({
+        message: "Not Found"
+      })
+      
+    } catch (error) {
+      return(error)
+    }
+  }
+
   async getItem(req:any) {
     console.log(req);
     try {
       req.size && (req.size= JSON.parse(req.size))
-  
+      
         let items = await this.productModel
           .find(req)
         console.log("here", items);
